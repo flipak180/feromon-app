@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from '@ionic/vue-router';
 import Tabs from "@/components/Tabs.vue";
+import {useMainStore} from "@/store/index.js";
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
+})
+
+router.beforeEach(async () => {
+  const store = useMainStore();
+  await store.restored;
 })
 
 export default router

@@ -2,7 +2,7 @@
     <ion-page>
         <ion-content class="ion-padding">
             <h1>Избранное</h1>
-            <ProductsList />
+            <ProductsList :is-favs="true" />
         </ion-content>
     </ion-page>
 </template>

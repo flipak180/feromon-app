@@ -1,3 +1,11 @@
+<script setup>
+import {IonBadge, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
+import {cart, heart, list} from 'ionicons/icons';
+import {useMainStore} from "@/store/index.js";
+
+const store = useMainStore();
+</script>
+
 <template>
     <ion-page>
         <ion-tabs>
@@ -9,7 +17,7 @@
                 </ion-tab-button>
 
                 <ion-tab-button tab="tab2" href="/tabs/favs">
-                    <ion-badge>17</ion-badge>
+                    <ion-badge>{{ store.favs.length }}</ion-badge>
                     <ion-icon aria-hidden="true" :icon="heart"/>
                     <ion-label>Избранное</ion-label>
                 </ion-tab-button>
@@ -23,11 +31,6 @@
         </ion-tabs>
     </ion-page>
 </template>
-
-<script setup>
-import {IonBadge, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
-import {cart, heart, list} from 'ionicons/icons';
-</script>
 
 <style lang="scss">
 ion-tab-button {

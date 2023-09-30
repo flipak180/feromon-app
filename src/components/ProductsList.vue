@@ -3,12 +3,22 @@ import {cartOutline, heartOutline} from "ionicons/icons";
 import {IonButton, IonIcon} from '@ionic/vue';
 
 import products from '@/data/products.js'
+import {useMainStore} from "@/store/index.js";
+
+const props = defineProps(['isFavs'])
+const store = useMainStore();
+
+const toggleLike = (productId) => {
+    store.favs.includes(productId)
+        ? store.favs.splice(store.favs.indexOf(productId), 1)
+        : store.favs.push(productId);
+}
 </script>
 
 <template>
     <div class="products-list">
-        <div class="product-item" v-for="product in products" :key="product.id">
-            <ion-button size="small" shape="round" color="dark" class="product-item__like">
+        <div class="product-item" v-for="product in products" :key="product.id" v-show="!isFavs || store.favs.includes(product.id)">
+            <ion-button size="small" shape="round" :color="store.favs.includes(product.id) ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product.id)">
                 <ion-icon slot="icon-only" :icon="heartOutline"></ion-icon>
             </ion-button>
             <div class="product-item__image" :style="{ backgroundImage: `url(${product.image})` }"></div>
