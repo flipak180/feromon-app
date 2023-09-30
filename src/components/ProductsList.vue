@@ -4,6 +4,7 @@ import {IonButton, IonIcon} from '@ionic/vue';
 
 import products from '@/data/products.js'
 import {useMainStore} from "@/store/index.js";
+import {computed} from "vue";
 
 const props = defineProps(['isFavs'])
 const store = useMainStore();
@@ -13,11 +14,13 @@ const toggleLike = (productId) => {
         ? store.favs.splice(store.favs.indexOf(productId), 1)
         : store.favs.push(productId);
 }
+
+const actualProducts = computed(() => !props.isFavs ? products : products.filter(product => store.favs.includes(product.id)));
 </script>
 
 <template>
-    <div class="products-list">
-        <div class="product-item" v-for="product in products" :key="product.id" v-show="!isFavs || store.favs.includes(product.id)">
+    <div class="products-list" v-if="actualProducts.length">
+        <div class="product-item" v-for="product in actualProducts" :key="product.id">
             <ion-button size="small" shape="round" :color="store.favs.includes(product.id) && !isFavs ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product.id)">
                 <ion-icon slot="icon-only" :icon="!isFavs ? heartOutline : closeOutline"></ion-icon>
             </ion-button>
@@ -35,6 +38,7 @@ const toggleLike = (productId) => {
             </div>
         </div>
     </div>
+    <div v-else>Здесь пока ничего нет</div>
 </template>
 
 <style scoped lang="scss">

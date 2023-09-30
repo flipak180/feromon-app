@@ -17,7 +17,7 @@ const store = useMainStore();
                 </ion-tab-button>
 
                 <ion-tab-button tab="tab2" href="/tabs/favs">
-                    <ion-badge>{{ store.favs.length }}</ion-badge>
+                    <ion-badge v-show="store.favs.length">{{ store.favs.length }}</ion-badge>
                     <ion-icon aria-hidden="true" :icon="heart"/>
                     <ion-label>Избранное</ion-label>
                 </ion-tab-button>
