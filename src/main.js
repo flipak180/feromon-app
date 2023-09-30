@@ -23,13 +23,19 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import './theme/main.scss';
+import {createPinia} from "pinia";
+import {piniaCapacitorPersist} from 'pinia-plugin-capacitor-persist';
+
+const pinia = createPinia();
+pinia.use(piniaCapacitorPersist);
 
 const app = createApp(App)
-  .use(IonicVue, {
-    mode: 'ios',
-  })
-  .use(router);
-  
+    .use(IonicVue, {
+        mode: 'ios',
+    })
+    .use(pinia)
+    .use(router);
+
 router.isReady().then(() => {
-  app.mount('#app');
+    app.mount('#app');
 });

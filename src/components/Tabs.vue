@@ -9,11 +9,13 @@
                 </ion-tab-button>
 
                 <ion-tab-button tab="tab2" href="/tabs/favs">
+                    <ion-badge>17</ion-badge>
                     <ion-icon aria-hidden="true" :icon="heart"/>
                     <ion-label>Избранное</ion-label>
                 </ion-tab-button>
 
                 <ion-tab-button tab="tab3" href="/tabs/cart">
+                    <ion-badge>8</ion-badge>
                     <ion-icon aria-hidden="true" :icon="cart"/>
                     <ion-label>Корзина</ion-label>
                 </ion-tab-button>
@@ -23,7 +25,7 @@
 </template>
 
 <script setup>
-import {IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
+import {IonBadge, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
 import {cart, heart, list} from 'ionicons/icons';
 </script>
 
