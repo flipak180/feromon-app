@@ -1,5 +1,5 @@
 <script setup>
-import {cartOutline, heartOutline} from "ionicons/icons";
+import {cartOutline, closeOutline, heartOutline} from "ionicons/icons";
 import {IonButton, IonIcon} from '@ionic/vue';
 
 import products from '@/data/products.js'
@@ -18,8 +18,8 @@ const toggleLike = (productId) => {
 <template>
     <div class="products-list">
         <div class="product-item" v-for="product in products" :key="product.id" v-show="!isFavs || store.favs.includes(product.id)">
-            <ion-button size="small" shape="round" :color="store.favs.includes(product.id) ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product.id)">
-                <ion-icon slot="icon-only" :icon="heartOutline"></ion-icon>
+            <ion-button size="small" shape="round" :color="store.favs.includes(product.id) && !isFavs ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product.id)">
+                <ion-icon slot="icon-only" :icon="!isFavs ? heartOutline : closeOutline"></ion-icon>
             </ion-button>
             <div class="product-item__image" :style="{ backgroundImage: `url(${product.image})` }"></div>
             <div class="product-item__info">
