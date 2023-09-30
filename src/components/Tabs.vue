@@ -29,7 +29,6 @@ import {cart, heart, list} from 'ionicons/icons';
 
 <style lang="scss">
 ion-tab-button {
-    --color: var(--black);
     --color-selected: var(--ion-color-primary);
 
     @media (prefers-color-scheme: dark) {

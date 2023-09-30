@@ -10,6 +10,8 @@ http://ionicframework.com/docs/theming/ */
   --black-rgba: 0, 0, 0;
   --purple: #7B4FD9;
   --black-light: #191919;
+  --grey: #D9D9D9;
+  --grey-light: #F5F5F5;
 
   /** primary **/
   --ion-color-primary: #7B4FD9;
