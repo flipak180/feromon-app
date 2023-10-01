@@ -23,7 +23,7 @@ const store = useMainStore();
                 </ion-tab-button>
 
                 <ion-tab-button tab="tab3" href="/tabs/cart">
-                    <ion-badge>8</ion-badge>
+                    <ion-badge v-show="store.cart.length">{{ store.cart.length }}</ion-badge>
                     <ion-icon aria-hidden="true" :icon="cart"/>
                     <ion-label>Корзина</ion-label>
                 </ion-tab-button>

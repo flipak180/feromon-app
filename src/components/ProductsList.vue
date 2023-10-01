@@ -1,5 +1,5 @@
 <script setup>
-import {cartOutline, closeOutline, heartOutline} from "ionicons/icons";
+import {addOutline, cartOutline, closeOutline, heartOutline, removeOutline} from "ionicons/icons";
 import {IonButton, IonIcon} from '@ionic/vue';
 
 import products from '@/data/products.js'
@@ -13,6 +13,17 @@ const toggleLike = (productId) => {
     store.favs.includes(productId)
         ? store.favs.splice(store.favs.indexOf(productId), 1)
         : store.favs.push(productId);
+}
+
+const addToCart = (product) => {
+    store.cart.push({
+        ...product,
+        amount: 1,
+    });
+}
+
+const inCartAmount = (productId) => {
+    return store.cart.find(item => item.id === productId)?.amount || 0;
 }
 
 const actualProducts = computed(() => !props.isFavs ? products : products.filter(product => store.favs.includes(product.id)));
@@ -30,9 +41,18 @@ const actualProducts = computed(() => !props.isFavs ? products : products.filter
                 <div class="product-item__bottom">
                     <div class="product-item__price">{{ product.price }}</div>
                     <div class="add-to-cart">
-                        <ion-button size="small" class="add-to-cart__button">
+                        <ion-button size="small" class="add-to-cart__button" @click="addToCart(product)" v-if="!inCartAmount(product.id)">
                             <ion-icon slot="icon-only" :icon="cartOutline"></ion-icon>
                         </ion-button>
+                        <div class="amount-spinner" v-else>
+                            <button>
+                                <ion-icon :icon="removeOutline"></ion-icon>
+                            </button>
+                            <span>{{ inCartAmount(product.id) }}</span>
+                            <button>
+                                <ion-icon :icon="addOutline"></ion-icon>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,6 +113,32 @@ const actualProducts = computed(() => !props.isFavs ? products : products.filter
     &__price {
         font-size: 15px;
         font-weight: bold;
+    }
+}
+
+.amount-spinner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--grey);
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 5px;
+    gap: 5px;
+
+    button {
+        background: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+        color: var(--purple);
+    }
+
+    span {
+        display: flex;
+        width: 12px;
+        align-items: center;
+        justify-content: center;
     }
 }
 </style>
