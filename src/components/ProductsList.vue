@@ -141,6 +141,10 @@ const actualProducts = computed(() => !props.isFavs ? products : products.filter
     padding: 5px;
     gap: 5px;
 
+    @media (prefers-color-scheme: dark) {
+        background: #000;
+    }
+
     button {
         background: none;
         border: none;

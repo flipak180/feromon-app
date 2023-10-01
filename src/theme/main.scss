@@ -2,6 +2,15 @@ ion-badge {
     font-weight: normal;
 }
 
+ion-tab-bar {
+    --background: var(--grey-light);
+    --border: none;
+
+    @media (prefers-color-scheme: dark) {
+        --background: var(--black-light);
+    }
+}
+
 .button-round {
     --padding-top: 5px;
     --padding-bottom: 5px;
