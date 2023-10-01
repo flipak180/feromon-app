@@ -3,7 +3,7 @@ import {useMainStore} from "@/store/index.js";
 import {computed} from "vue";
 
 const store = useMainStore();
-let sum = computed(() => store.cart.reduce((acc, cartItem) => acc + (cartItem.price * cartItem.amount), 0));
+const sum = computed(() => store.cart.reduce((acc, cartItem) => acc + (cartItem.price * cartItem.amount), 0));
 </script>
 
 <template>

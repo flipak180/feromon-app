@@ -2,8 +2,11 @@
 import {IonBadge, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
 import {cart, heart, list} from 'ionicons/icons';
 import {useMainStore} from "@/store/index.js";
+import {computed} from "vue";
 
 const store = useMainStore();
+
+const totalAmount = computed(() => store.cart.reduce((acc, cartItem) => acc + cartItem.amount, 0));
 </script>
 
 <template>
@@ -23,7 +26,7 @@ const store = useMainStore();
                 </ion-tab-button>
 
                 <ion-tab-button tab="tab3" href="/tabs/cart">
-                    <ion-badge v-show="store.cart.length">{{ store.cart.length }}</ion-badge>
+                    <ion-badge v-show="totalAmount">{{ totalAmount }}</ion-badge>
                     <ion-icon aria-hidden="true" :icon="cart"/>
                     <ion-label>Корзина</ion-label>
                 </ion-tab-button>
