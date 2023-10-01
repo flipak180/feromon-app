@@ -28,6 +28,10 @@ const inCart = (productId) => {
 }
 
 const actualProducts = computed(() => !props.isFavs ? products : products.filter(product => store.favs.includes(product.id)));
+
+const showProductModal = (product) => {
+    store.modalProduct = product;
+}
 </script>
 
 <template>
@@ -36,9 +40,9 @@ const actualProducts = computed(() => !props.isFavs ? products : products.filter
             <ion-button size="small" shape="round" :color="store.favs.includes(product.id) && !isFavs ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product.id)">
                 <ion-icon slot="icon-only" :icon="!isFavs ? heartOutline : closeOutline"></ion-icon>
             </ion-button>
-            <div class="product-item__image" :style="{ backgroundImage: `url(${product.image})` }"></div>
+            <div class="product-item__image" :style="{ backgroundImage: `url(${product.image})` }" @click="showProductModal(product)"></div>
             <div class="product-item__info">
-                <div class="product-item__title">{{ product.title }}</div>
+                <div class="product-item__title" @click="showProductModal(product)">{{ product.title }}</div>
                 <div class="product-item__bottom">
                     <div class="product-item__price">{{ product.price.toLocaleString() }} ₽</div>
                     <div class="add-to-cart">
