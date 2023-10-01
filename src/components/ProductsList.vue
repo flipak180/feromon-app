@@ -1,10 +1,11 @@
 <script setup>
-import {addOutline, cartOutline, closeOutline, heartOutline, removeOutline} from "ionicons/icons";
+import {cartOutline, closeOutline, heartOutline} from "ionicons/icons";
 import {IonButton, IonIcon} from '@ionic/vue';
 
 import products from '@/data/products.js'
 import {useMainStore} from "@/store/index.js";
 import {computed} from "vue";
+import AmountSpinner from "@/components/AmountSpinner.vue";
 
 const props = defineProps(['isFavs'])
 const store = useMainStore();
@@ -22,23 +23,8 @@ const addToCart = (product) => {
     });
 }
 
-const inCartAmount = (productId) => {
-    return store.cart.find(item => item.id === productId)?.amount || 0;
-}
-
-const changeAmount = (productId, add = true) => {
-    const cartItem = store.cart.find(item => item.id === productId);
-    if (!cartItem) {
-        return;
-    }
-
-    if (add) {
-        cartItem.amount++;
-    } else if (cartItem.amount > 1) {
-        cartItem.amount--;
-    } else {
-        store.cart = store.cart.filter(item => item.id !== productId);
-    }
+const inCart = (productId) => {
+    return store.cart.some(item => item.id === productId);
 }
 
 const actualProducts = computed(() => !props.isFavs ? products : products.filter(product => store.favs.includes(product.id)));
@@ -56,18 +42,10 @@ const actualProducts = computed(() => !props.isFavs ? products : products.filter
                 <div class="product-item__bottom">
                     <div class="product-item__price">{{ product.price.toLocaleString() }} ₽</div>
                     <div class="add-to-cart">
-                        <ion-button size="small" class="add-to-cart__button" @click="addToCart(product)" v-if="!inCartAmount(product.id)">
+                        <ion-button size="small" class="add-to-cart__button" @click="addToCart(product)" v-if="!inCart(product.id)">
                             <ion-icon slot="icon-only" :icon="cartOutline"></ion-icon>
                         </ion-button>
-                        <div class="amount-spinner" v-else>
-                            <button @click="changeAmount(product.id, false)">
-                                <ion-icon :icon="removeOutline"></ion-icon>
-                            </button>
-                            <span>{{ inCartAmount(product.id) }}</span>
-                            <button @click="changeAmount(product.id)">
-                                <ion-icon :icon="addOutline"></ion-icon>
-                            </button>
-                        </div>
+                        <AmountSpinner :product="product" v-else />
                     </div>
                 </div>
             </div>
@@ -131,33 +109,12 @@ const actualProducts = computed(() => !props.isFavs ? products : products.filter
     }
 }
 
-.amount-spinner {
+.add-to-cart {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--grey);
-    border-radius: 5px;
-    font-size: 14px;
-    padding: 5px;
-    gap: 5px;
 
-    @media (prefers-color-scheme: dark) {
-        background: #000;
-    }
-
-    button {
-        background: none;
-        border: none;
+    &__button {
+        height: 28px;
         margin: 0;
-        padding: 0;
-        color: var(--purple);
-    }
-
-    span {
-        display: flex;
-        width: 12px;
-        align-items: center;
-        justify-content: center;
     }
 }
 </style>

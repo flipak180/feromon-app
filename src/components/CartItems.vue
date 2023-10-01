@@ -1,19 +1,10 @@
 <script setup>
 import {useMainStore} from "@/store/index.js";
-import {addOutline, closeOutline, removeOutline} from "ionicons/icons";
+import {closeOutline} from "ionicons/icons";
 import {IonIcon} from "@ionic/vue";
+import AmountSpinner from "@/components/AmountSpinner.vue";
 
 const store = useMainStore();
-
-const changeAmount = (cartItem, add = true) => {
-    if (add) {
-        cartItem.amount++;
-    } else if (cartItem.amount > 1) {
-        cartItem.amount--;
-    } else {
-        store.cart = store.cart.filter(item => item.id !== cartItem.id);
-    }
-}
 
 const removeCartItem = (cartItem) => {
     store.cart = store.cart.filter(item => item.id !== cartItem.id);
@@ -30,15 +21,7 @@ const removeCartItem = (cartItem) => {
             <div class="cart-item__info">
                 <div class="cart-item__title">{{ cartItem.title }}</div>
                 <div class="cart-item__bottom">
-                    <div class="amount-spinner">
-                        <button @click="changeAmount(cartItem, false)">
-                            <ion-icon :icon="removeOutline"></ion-icon>
-                        </button>
-                        <span>{{ cartItem.amount }}</span>
-                        <button @click="changeAmount(cartItem)">
-                            <ion-icon :icon="addOutline"></ion-icon>
-                        </button>
-                    </div>
+                    <AmountSpinner :product="cartItem" />
                     <div class="cart-item__price">{{ (cartItem.price * cartItem.amount).toLocaleString() }} ₽</div>
                 </div>
             </div>
