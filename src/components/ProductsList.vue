@@ -26,6 +26,21 @@ const inCartAmount = (productId) => {
     return store.cart.find(item => item.id === productId)?.amount || 0;
 }
 
+const changeAmount = (productId, add = true) => {
+    const cartItem = store.cart.find(item => item.id === productId);
+    if (!cartItem) {
+        return;
+    }
+
+    if (add) {
+        cartItem.amount++;
+    } else if (cartItem.amount > 1) {
+        cartItem.amount--;
+    } else {
+        store.cart = store.cart.filter(item => item.id !== productId);
+    }
+}
+
 const actualProducts = computed(() => !props.isFavs ? products : products.filter(product => store.favs.includes(product.id)));
 </script>
 
@@ -39,17 +54,17 @@ const actualProducts = computed(() => !props.isFavs ? products : products.filter
             <div class="product-item__info">
                 <div class="product-item__title">{{ product.title }}</div>
                 <div class="product-item__bottom">
-                    <div class="product-item__price">{{ product.price }}</div>
+                    <div class="product-item__price">{{ product.price.toLocaleString() }} ₽</div>
                     <div class="add-to-cart">
                         <ion-button size="small" class="add-to-cart__button" @click="addToCart(product)" v-if="!inCartAmount(product.id)">
                             <ion-icon slot="icon-only" :icon="cartOutline"></ion-icon>
                         </ion-button>
                         <div class="amount-spinner" v-else>
-                            <button>
+                            <button @click="changeAmount(product.id, false)">
                                 <ion-icon :icon="removeOutline"></ion-icon>
                             </button>
                             <span>{{ inCartAmount(product.id) }}</span>
-                            <button>
+                            <button @click="changeAmount(product.id)">
                                 <ion-icon :icon="addOutline"></ion-icon>
                             </button>
                         </div>
