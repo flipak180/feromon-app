@@ -31,7 +31,7 @@ const inCart = (productId) => {
 
 <template>
     <ion-modal ref="productModal" :is-open="isOpen" @willDismiss="onWillDismiss" class="product-modal">
-        <ion-content color="dark">
+        <ion-content v-if="product">
             <div class="product-modal__content">
                 <ion-button size="small" shape="round" color="dark" class="product-modal__close" @click="close()">
                     <ion-icon slot="icon-only" :icon="closeOutline"></ion-icon>
@@ -59,10 +59,15 @@ const inCart = (productId) => {
 
 <style scoped lang="scss">
 .product-modal {
+    --background: #fff;
+
+    ion-content {
+        --background: #fff;
+        --color: #000;
+    }
 
     &__content {
         padding: 5px 5px 50px;
-        background: #fff;
     }
 
     &__close {
