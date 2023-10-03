@@ -1,27 +1,20 @@
 <script setup>
-
+const categories = await fetch(`http://info.feromon-menu.ru/api/categories`).then((r) => r.json());
 </script>
 
 <template>
     <div class="categories-menu">
-        <a href="" class="active">Кальяны</a>
-        <a href="">Летнее меню</a>
-        <a href="">Завтраки</a>
-        <a href="">Бизнес-ланчи</a>
-        <a href="">Азиатское меню</a>
-        <a href="">Салаты</a>
-        <a href="">Закуски</a>
-        <a href="">Супы</a>
+        <span v-for="category in categories" :key="category.id">{{ category.title }}</span>
     </div>
     <div class="subcategories-menu">
-        <a href="">Кальяны</a>
-        <a href="">Летнее меню</a>
-        <a href="" class="active">Завтраки</a>
-        <a href="">Бизнес-ланчи</a>
-        <a href="">Азиатское меню</a>
-        <a href="">Салаты</a>
-        <a href="">Закуски</a>
-        <a href="">Супы</a>
+        <span>Кальяны</span>
+        <span>Летнее меню</span>
+        <span class="active">Завтраки</span>
+        <span>Бизнес-ланчи</span>
+        <span>Азиатское меню</span>
+        <span>Салаты</span>
+        <span>Закуски</span>
+        <span>Супы</span>
     </div>
 </template>
 
@@ -37,11 +30,12 @@
         display: none;
     }
 
-    a {
+    span {
         color: #000;
         text-decoration: none;
         white-space: nowrap;
         text-transform: uppercase;
+        cursor: pointer;
 
         @media (prefers-color-scheme: dark) {
             color: #fff;
@@ -52,7 +46,7 @@
 .categories-menu {
     margin-bottom: 15px;
 
-    a {
+    span {
         font-size: 14px;
         font-weight: bold;
 
@@ -71,7 +65,7 @@
 .subcategories-menu {
     margin-bottom: 20px;
 
-    a {
+    span {
         font-size: 12px;
 
         &:hover,

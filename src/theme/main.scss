@@ -35,3 +35,15 @@ h1 {
         left: 0;
     }
 }
+
+@media (min-width: 720px) {
+    ion-app {
+        max-width: 720px;
+        margin: auto;
+        position: relative;
+    }
+
+    .scroll-content {
+        overflow-y: auto;
+    }
+}
