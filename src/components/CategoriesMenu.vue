@@ -1,20 +1,37 @@
 <script setup>
-const categories = await fetch(`http://info.feromon-menu.ru/api/categories`).then((r) => r.json());
+import {computed, ref} from "vue";
+
+const allCategories = await fetch(`http://info.feromon-menu.ru/api/categories`).then((r) => r.json());
+const categories = allCategories.filter(item => !item.parent_id);
+const activeCategory = ref(categories[0]);
+const subCategories = computed(() => allCategories.filter(item => item.parent_id === activeCategory.value.id));
+const activeSubCategory = ref(subCategories.value[0]);
+
+const onCategorySelect = (category) => {
+    activeCategory.value = category;
+}
+
+const onSubCategorySelect = (subCategory) => {
+    activeSubCategory.value = subCategory;
+}
 </script>
 
 <template>
     <div class="categories-menu">
-        <span v-for="category in categories" :key="category.id">{{ category.title }}</span>
+        <span v-for="category in categories" :key="category.id"
+              :class="{active: category.id === activeCategory.id}"
+              @click="onCategorySelect(category)"
+        >
+            {{ category.title }}
+        </span>
     </div>
     <div class="subcategories-menu">
-        <span>Кальяны</span>
-        <span>Летнее меню</span>
-        <span class="active">Завтраки</span>
-        <span>Бизнес-ланчи</span>
-        <span>Азиатское меню</span>
-        <span>Салаты</span>
-        <span>Закуски</span>
-        <span>Супы</span>
+        <span v-for="subCategory in subCategories" :key="subCategory.id"
+              :class="{active: subCategory.id === activeSubCategory.id}"
+              @click="onSubCategorySelect(subCategory)"
+        >
+            {{ subCategory.title }}
+        </span>
     </div>
 </template>
 
