@@ -1,5 +1,5 @@
 <script setup>
-import {IonButton, IonIcon, IonModal} from '@ionic/vue';
+import {IonButton, IonContent, IonIcon, IonModal} from '@ionic/vue';
 import {computed, ref} from 'vue';
 import {useMainStore} from "@/store/index.js";
 import {closeOutline} from "ionicons/icons";
