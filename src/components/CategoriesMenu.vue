@@ -67,7 +67,6 @@ const onSubCategorySelect = (subCategory) => {
         font-size: 14px;
         font-weight: bold;
 
-        &:hover:after,
         &.active:after {
             content: '';
             display: block;
@@ -85,7 +84,6 @@ const onSubCategorySelect = (subCategory) => {
     span {
         font-size: 12px;
 
-        &:hover,
         &.active {
             color: var(--purple);
         }
