@@ -17,14 +17,27 @@ const routes = [
       },
       {
         path: 'menu',
+        name: 'menu',
+        component: () => import('@/views/MenuPage.vue')
+      },
+      {
+        path: 'menu/category/:category',
+        name: 'category',
+        component: () => import('@/views/MenuPage.vue')
+      },
+      {
+        path: 'menu/subCategory/:subCategory',
+        name: 'subCategory',
         component: () => import('@/views/MenuPage.vue')
       },
       {
         path: 'favs',
+        name: 'favs',
         component: () => import('@/views/FavsPage.vue')
       },
       {
         path: 'cart',
+        name: 'cart',
         component: () => import('@/views/CartPage.vue')
       }
     ]

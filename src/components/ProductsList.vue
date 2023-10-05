@@ -7,7 +7,7 @@ import {useMainStore} from "@/store/index.js";
 import {computed} from "vue";
 import AmountSpinner from "@/components/AmountSpinner.vue";
 
-const props = defineProps(['isFavs'])
+const props = defineProps(['isFavs', 'category', 'subCategory'])
 const store = useMainStore();
 
 const toggleLike = (productId) => {
@@ -27,7 +27,8 @@ const inCart = (productId) => {
     return store.cart.some(item => item.id === productId);
 }
 
-const actualProducts = computed(() => !props.isFavs ? products : products.filter(product => store.favs.includes(product.id)));
+const allProducts = await fetch(`http://info.feromon-menu.ru/api/products?category=${props.subCategory || props.category}`).then((r) => r.json());
+const actualProducts = computed(() => !props.isFavs ? allProducts : products.filter(product => store.favs.includes(product.id)));
 
 const showProductModal = (product) => {
     store.modalProduct = product;
@@ -40,7 +41,7 @@ const showProductModal = (product) => {
             <ion-button size="small" shape="round" :color="store.favs.includes(product.id) && !isFavs ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product.id)">
                 <ion-icon slot="icon-only" :icon="!isFavs ? heartOutline : closeOutline"></ion-icon>
             </ion-button>
-            <div class="product-item__image" :style="{ backgroundImage: `url(${product.image})` }" @click="showProductModal(product)"></div>
+            <div class="product-item__image" :style="{ backgroundImage: `url(http://feromon-menu.ru${product.image})` }" @click="showProductModal(product)"></div>
             <div class="product-item__info">
                 <div class="product-item__title" @click="showProductModal(product)">{{ product.title }}</div>
                 <div class="product-item__bottom">

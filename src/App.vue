@@ -1,6 +1,8 @@
 <template>
   <ion-app>
-    <ion-router-outlet />
+    <Suspense>
+        <ion-router-outlet />
+    </Suspense>
   </ion-app>
 </template>
 

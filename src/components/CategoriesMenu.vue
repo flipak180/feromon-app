@@ -1,25 +1,30 @@
 <script setup>
 import {computed, ref} from "vue";
+import {useRoute} from "vue-router";
+import {useIonRouter} from "@ionic/vue";
 
-const allCategories = await fetch(`http://info.feromon-menu.ru/api/categories`).then((r) => r.json());
-const categories = allCategories.filter(item => !item.parent_id);
-const activeCategory = ref(categories[0]);
-const subCategories = computed(() => allCategories.filter(item => item.parent_id === activeCategory.value.id));
+const ionRouter = useIonRouter();
+const route = useRoute();
+const props = defineProps(['allCategories', 'activeCategory', 'activeSubCategory'])
+
+const categories = props.allCategories.filter(item => !item.parent_id);
+const activeCategory = +route.params.category || categories[0].id;
+const subCategories = computed(() => props.allCategories.filter(item => item.parent_id === props.activeCategory));
 const activeSubCategory = ref(subCategories.value[0]);
 
 const onCategorySelect = (category) => {
-    activeCategory.value = category;
+    ionRouter.replace({ name: 'category', params: { category: category.id } });
 }
 
 const onSubCategorySelect = (subCategory) => {
-    activeSubCategory.value = subCategory;
+    ionRouter.replace({ name: 'subCategory', params: { subCategory: subCategory.id } });
 }
 </script>
 
 <template>
     <div class="categories-menu">
         <span v-for="category in categories" :key="category.id"
-              :class="{active: category.id === activeCategory.id}"
+              :class="{active: category.id === props.activeCategory}"
               @click="onCategorySelect(category)"
         >
             {{ category.title }}
