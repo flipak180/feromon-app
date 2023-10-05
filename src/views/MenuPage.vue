@@ -14,7 +14,7 @@ const allCategories = await fetch(`http://info.feromon-menu.ru/api/categories`).
 const categories = allCategories.filter(item => !item.parent_id);
 const activeCategory = +route.params.category || categories[0].id;
 const subCategories = computed(() => allCategories.filter(item => item.parent_id === activeCategory));
-const activeSubCategory = +route.params.subCategory || subCategories[0].id;
+const activeSubCategory = +route.params.subCategory || subCategories.value[0].id;
 </script>
 
 <template>

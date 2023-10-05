@@ -17,7 +17,7 @@ const removeCartItem = (cartItem) => {
             <button @click="removeCartItem(cartItem)" class="cart-item__remove">
                 <ion-icon :icon="closeOutline"></ion-icon>
             </button>
-            <div class="cart-item__image" :style="{ backgroundImage: `url(${cartItem.image})` }"></div>
+            <div class="cart-item__image" :style="{ backgroundImage: `url(http://info.feromon-menu.ru${cartItem.image})` }"></div>
             <div class="cart-item__info">
                 <div class="cart-item__title">{{ cartItem.title }}</div>
                 <div class="cart-item__bottom">

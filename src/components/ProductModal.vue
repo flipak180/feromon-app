@@ -27,6 +27,8 @@ const addToCart = (product) => {
 const inCart = (productId) => {
     return store.cart.some(item => item.id === productId);
 }
+
+console.log(store.modalProduct);
 </script>
 
 <template>
@@ -36,7 +38,7 @@ const inCart = (productId) => {
                 <ion-button size="small" shape="round" color="dark" class="product-modal__close" @click="close()">
                     <ion-icon slot="icon-only" :icon="closeOutline"></ion-icon>
                 </ion-button>
-                <div class="product-modal__image" :style="{ backgroundImage: `url(${product.image})` }"></div>
+                <div class="product-modal__image" :style="{ backgroundImage: `url(http://info.feromon-menu.ru${product.image})` }"></div>
                 <div class="product-modal__info">
                     <div class="product-modal__title">
                         {{ product.title }}
