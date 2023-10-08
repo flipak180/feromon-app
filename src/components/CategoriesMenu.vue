@@ -1,30 +1,25 @@
 <script setup>
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import {useRoute} from "vue-router";
 import {useIonRouter} from "@ionic/vue";
 
 const ionRouter = useIonRouter();
 const route = useRoute();
-const props = defineProps(['allCategories', 'activeCategory', 'activeSubCategory'])
+const props = defineProps(['allCategories', 'activeCategoryId'])
 
 const categories = props.allCategories.filter(item => !item.parent_id);
-const activeCategory = +route.params.category || categories[0].id;
-const subCategories = computed(() => props.allCategories.filter(item => item.parent_id === props.activeCategory));
-const activeSubCategory = ref(subCategories.value[0]);
+const activeCategory = props.allCategories.find(item => item.id === props.activeCategoryId);
+const subCategories = computed(() => props.allCategories.filter(item => item.parent_id && (item.parent_id === activeCategory.id || item.parent_id === activeCategory.parent_id)));
 
 const onCategorySelect = (category) => {
     ionRouter.replace({ name: 'category', params: { category: category.id } });
-}
-
-const onSubCategorySelect = (subCategory) => {
-    ionRouter.replace({ name: 'subCategory', params: { subCategory: subCategory.id } });
 }
 </script>
 
 <template>
     <div class="categories-menu">
         <span v-for="category in categories" :key="category.id"
-              :class="{active: category.id === props.activeCategory}"
+              :class="{active: category.id === activeCategory.id || category.id === activeCategory.parent_id}"
               @click="onCategorySelect(category)"
         >
             {{ category.title }}
@@ -32,8 +27,8 @@ const onSubCategorySelect = (subCategory) => {
     </div>
     <div class="subcategories-menu">
         <span v-for="subCategory in subCategories" :key="subCategory.id"
-              :class="{active: subCategory.id === activeSubCategory.id}"
-              @click="onSubCategorySelect(subCategory)"
+              :class="{active: subCategory.id === activeCategory.id}"
+              @click="onCategorySelect(subCategory)"
         >
             {{ subCategory.title }}
         </span>

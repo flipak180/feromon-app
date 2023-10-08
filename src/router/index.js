@@ -25,11 +25,11 @@ const routes = [
         name: 'category',
         component: () => import('@/views/MenuPage.vue')
       },
-      {
-        path: 'menu/subCategory/:subCategory',
-        name: 'subCategory',
-        component: () => import('@/views/MenuPage.vue')
-      },
+      // {
+      //   path: 'menu/subCategory/:subCategory',
+      //   name: 'subCategory',
+      //   component: () => import('@/views/MenuPage.vue')
+      // },
       {
         path: 'favs',
         name: 'favs',

@@ -1,30 +1,26 @@
 <script setup>
-import {IonContent, IonPage, useIonRouter} from '@ionic/vue';
+import {IonContent, IonPage} from '@ionic/vue';
 import ProductsList from "@/components/ProductsList.vue";
 import ProductModal from "@/components/ProductModal.vue";
 import CategoriesMenu from "@/components/CategoriesMenu.vue";
 import Banners from "@/components/Banners.vue";
 import {useRoute} from "vue-router";
-import {computed} from "vue";
 import {BASE_URL} from "@/plugins/api.js";
 
-const ionRouter = useIonRouter();
 const route = useRoute();
 
 const allCategories = await fetch(`${BASE_URL}/api/categories`).then((r) => r.json());
 const categories = allCategories.filter(item => !item.parent_id);
-const activeCategory = +route.params.category || categories[0].id;
-const subCategories = computed(() => allCategories.filter(item => item.parent_id === activeCategory));
-const activeSubCategory = +route.params.subCategory || subCategories.value[0].id;
+const activeCategoryId = +route.params.category || categories[0].id;
 </script>
 
 <template>
     <ion-page>
         <ion-content class="ion-padding">
             <Banners />
-            <CategoriesMenu :allCategories="allCategories" :activeCategory="activeCategory" />
+            <CategoriesMenu :allCategories="allCategories" :activeCategoryId="activeCategoryId" />
             <Suspense>
-                <ProductsList :category="activeCategory" :subCategory="activeSubCategory" />
+                <ProductsList :categoryId="activeCategoryId" />
             </Suspense>
             <ProductModal />
         </ion-content>

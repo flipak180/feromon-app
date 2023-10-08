@@ -6,7 +6,7 @@ import {computed} from "vue";
 import AmountSpinner from "@/components/AmountSpinner.vue";
 import {BASE_URL} from "@/plugins/api.js";
 
-const props = defineProps(['isFavs', 'category', 'subCategory'])
+const props = defineProps(['isFavs', 'categoryId'])
 const store = useMainStore();
 
 const toggleLike = (product) => {
@@ -31,7 +31,7 @@ const inCart = (productId) => {
     return store.cart.some(item => item.id === productId);
 }
 
-const allProducts = await fetch(`${BASE_URL}/api/products?category=${props.subCategory || props.category}`).then((r) => r.json());
+const allProducts = await fetch(`${BASE_URL}/api/products?category=${props.categoryId}`).then((r) => r.json());
 const actualProducts = computed(() => !props.isFavs ? allProducts : store.favs);
 
 const showProductModal = (product) => {
