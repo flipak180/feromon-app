@@ -1,7 +1,7 @@
 <template>
   <ion-app>
     <Suspense>
-        <ion-router-outlet />
+        <ion-router-outlet :animated="false" />
     </Suspense>
   </ion-app>
 </template>

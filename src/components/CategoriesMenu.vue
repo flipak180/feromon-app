@@ -12,7 +12,7 @@ const activeCategory = props.allCategories.find(item => item.id === props.active
 const subCategories = computed(() => props.allCategories.filter(item => item.parent_id && (item.parent_id === activeCategory.id || item.parent_id === activeCategory.parent_id)));
 
 const onCategorySelect = (category) => {
-    ionRouter.replace({ name: 'category', params: { category: category.id } });
+    ionRouter.navigate({ name: 'category', params: { category: category.id } }, 'none');
 }
 </script>
 
