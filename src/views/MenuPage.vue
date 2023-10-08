@@ -6,11 +6,12 @@ import CategoriesMenu from "@/components/CategoriesMenu.vue";
 import Banners from "@/components/Banners.vue";
 import {useRoute} from "vue-router";
 import {computed} from "vue";
+import {BASE_URL} from "@/plugins/api.js";
 
 const ionRouter = useIonRouter();
 const route = useRoute();
 
-const allCategories = await fetch(`http://info.feromon-menu.ru/api/categories`).then((r) => r.json());
+const allCategories = await fetch(`${BASE_URL}/api/categories`).then((r) => r.json());
 const categories = allCategories.filter(item => !item.parent_id);
 const activeCategory = +route.params.category || categories[0].id;
 const subCategories = computed(() => allCategories.filter(item => item.parent_id === activeCategory));
