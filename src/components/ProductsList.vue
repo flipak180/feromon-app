@@ -71,7 +71,8 @@ const showProductModal = (product) => {
 }
 .product-item {
     position: relative;
-    background-color: var(--grey-light);
+    //background-color: var(--grey-light);
+    background-color: var(--black-light);
     border-radius: 10px;
 
     @media (prefers-color-scheme: dark) {

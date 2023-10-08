@@ -53,7 +53,8 @@ const onSubCategorySelect = (subCategory) => {
     }
 
     span {
-        color: #000;
+        //color: #000;
+        color: #fff;
         text-decoration: none;
         white-space: nowrap;
         text-transform: uppercase;

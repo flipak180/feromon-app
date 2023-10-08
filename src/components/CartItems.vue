@@ -37,7 +37,8 @@ const removeCartItem = (cartItem) => {
 }
 .cart-item {
     position: relative;
-    background-color: var(--grey-light);
+    //background-color: var(--grey-light);
+    background-color: var(--black-light);
     border-radius: 10px;
     padding: 5px;
     margin-bottom: 15px;
@@ -98,7 +99,8 @@ const removeCartItem = (cartItem) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--grey);
+    //background: var(--grey);
+    background: #000;
     border-radius: 5px;
     font-size: 14px;
     padding: 5px;

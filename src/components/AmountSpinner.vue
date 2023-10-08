@@ -43,7 +43,8 @@ const changeAmount = (productId, add = true) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--grey);
+    //background: var(--grey);
+    background: #000;
     border-radius: 5px;
     font-size: 14px;
     padding: 5px;

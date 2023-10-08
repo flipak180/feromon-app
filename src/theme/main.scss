@@ -7,7 +7,8 @@ ion-badge {
 }
 
 ion-tab-bar {
-    --background: var(--grey-light);
+    //--background: var(--grey-light);
+    --background: var(--black-light);
     --border: none;
 
     @media (prefers-color-scheme: dark) {

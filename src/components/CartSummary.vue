@@ -24,7 +24,8 @@ const sum = computed(() => store.cart.reduce((acc, cartItem) => acc + (cartItem.
     bottom: 0;
     left: 0;
     padding: 10px 15px 25px;
-    background: var(--grey-light);
+    //background: var(--grey-light);
+    background: var(--black-light);
     text-align: center;
     border-radius: 30px 30px 0 0;
 

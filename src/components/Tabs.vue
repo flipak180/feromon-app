@@ -37,7 +37,8 @@ const totalAmount = computed(() => store.cart.reduce((acc, cartItem) => acc + ca
 
 <style lang="scss">
 ion-tab-button {
-    --color-selected: var(--ion-color-primary);
+    //--color-selected: var(--ion-color-primary);
+    --color-selected: var(--ion-color-primary-contrast);
 
     @media (prefers-color-scheme: dark) {
         --color: var(--ion-color-primary-contrast);
