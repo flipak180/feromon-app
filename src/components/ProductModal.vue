@@ -4,6 +4,7 @@ import {computed, ref} from 'vue';
 import {useMainStore} from "@/store/index.js";
 import {closeOutline} from "ionicons/icons";
 import AmountSpinner from "@/components/AmountSpinner.vue";
+import {BASE_URL} from "@/plugins/api.js";
 
 const productModal = ref();
 const store = useMainStore();
@@ -36,7 +37,7 @@ const inCart = (productId) => {
                 <ion-button size="small" shape="round" color="dark" class="product-modal__close" @click="close()">
                     <ion-icon slot="icon-only" :icon="closeOutline"></ion-icon>
                 </ion-button>
-                <div class="product-modal__image" :style="{ backgroundImage: `url(${BASE_URL}${product.image})` }"></div>
+                <div class="product-modal__image" :style="{ backgroundImage: `url(${BASE_URL}${product.big_image})` }"></div>
                 <div class="product-modal__info">
                     <div class="product-modal__title">
                         {{ product.title }}
