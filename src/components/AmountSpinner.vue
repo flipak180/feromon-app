@@ -63,6 +63,7 @@ const changeAmount = (productId, add = true) => {
         color: var(--purple);
         display: flex;
         align-items: center;
+        font-size: 24px;
     }
 
     span {

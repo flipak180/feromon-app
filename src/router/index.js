@@ -39,7 +39,12 @@ const routes = [
         path: 'cart',
         name: 'cart',
         component: () => import('@/views/CartPage.vue')
-      }
+      },
+      {
+        path: 'system',
+        name: 'system',
+        component: () => import('@/views/SystemPage.vue')
+      },
     ]
   }
 ]
