@@ -1,5 +1,5 @@
 ion-content {
-    --background: url(@/assets/bg.jpg) center / cover no-repeat;
+    --background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)), url(@/assets/bg.jpg) center / cover no-repeat;
 }
 
 ion-badge {
