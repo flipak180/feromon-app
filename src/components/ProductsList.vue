@@ -5,6 +5,7 @@ import {useMainStore} from "@/store/index.js";
 import {computed} from "vue";
 import AmountSpinner from "@/components/AmountSpinner.vue";
 import {BASE_URL} from "@/plugins/api.js";
+import logo from '@/assets/logo.jpg';
 
 const props = defineProps(['isFavs', 'categoryId'])
 const store = useMainStore();
@@ -45,7 +46,7 @@ const showProductModal = (product) => {
             <ion-button size="small" shape="round" :color="inFav(product.id) && !isFavs ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product)">
                 <ion-icon slot="icon-only" :icon="!isFavs ? heartOutline : closeOutline"></ion-icon>
             </ion-button>
-            <div class="product-item__image" :style="{ backgroundImage: `url(${BASE_URL}${product.image})` }" @click="showProductModal(product)"></div>
+            <div class="product-item__image" :style="{ backgroundImage: `url(${product.image ? BASE_URL + product.image : logo})` }" @click="showProductModal(product)"></div>
             <div class="product-item__info">
                 <div class="product-item__title" @click="showProductModal(product)">{{ product.title }}</div>
                 <div class="product-item__bottom">

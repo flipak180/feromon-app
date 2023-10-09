@@ -1,11 +1,17 @@
 <script setup>
-import {computed} from "vue";
-import {useRoute} from "vue-router";
+import {computed, ref, watch} from "vue";
 import {useIonRouter} from "@ionic/vue";
 
 const ionRouter = useIonRouter();
-const route = useRoute();
 const props = defineProps(['allCategories', 'activeCategoryId'])
+const categoriesEl = ref(null)
+
+watch(() => props.allCategories, async () => {
+    // console.log(123);
+    // await nextTick();
+    // console.log(categoriesEl.value);
+    // categoriesEl.value.scrollLeft = 200;
+})
 
 const categories = props.allCategories.filter(item => !item.parent_id);
 const activeCategory = props.allCategories.find(item => item.id === props.activeCategoryId);
@@ -17,7 +23,7 @@ const onCategorySelect = (category) => {
 </script>
 
 <template>
-    <div class="categories-menu">
+    <div class="categories-menu" ref="categoriesEl">
         <span v-for="category in categories" :key="category.id"
               :class="{active: category.id === activeCategory.id || category.id === activeCategory.parent_id}"
               @click="onCategorySelect(category)"
