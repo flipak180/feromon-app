@@ -5,20 +5,25 @@ import ProductModal from "@/components/ProductModal.vue";
 import CategoriesMenu from "@/components/CategoriesMenu.vue";
 import Banners from "@/components/Banners.vue";
 import {useRoute} from "vue-router";
-import {BASE_URL} from "@/plugins/api.js";
+import {useCategoriesStore} from "@/store/categories.js";
+import {computed} from "vue";
 
 const route = useRoute();
+const categoriesStore = useCategoriesStore();
 
-const allCategories = await fetch(`${BASE_URL}/api/categories`).then((r) => r.json());
-const categories = allCategories.filter(item => !item.parent_id);
-const activeCategoryId = +route.params.categoryId || categories[0].id;
+const categories = computed(() => {
+    return categoriesStore.categories;
+});
+const activeCategoryId = computed(() => {
+    return +route.params.categoryId || categories[0].id;
+});
 </script>
 
 <template>
     <ion-page>
         <ion-content class="ion-padding">
             <Banners />
-            <CategoriesMenu :allCategories="allCategories" :activeCategoryId="activeCategoryId" />
+            <CategoriesMenu :allCategories="categories" :activeCategoryId="activeCategoryId" />
             <Suspense>
                 <ProductsList :categoryId="activeCategoryId" />
             </Suspense>
