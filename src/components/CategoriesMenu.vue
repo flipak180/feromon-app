@@ -18,7 +18,7 @@ const activeCategory = props.allCategories.find(item => item.id === props.active
 const subCategories = computed(() => props.allCategories.filter(item => item.parent_id && (item.parent_id === activeCategory.id || item.parent_id === activeCategory.parent_id)));
 
 const onCategorySelect = (category) => {
-    ionRouter.navigate({ name: 'category', params: { category: category.id } }, 'none');
+    ionRouter.navigate({ name: 'menu', params: { categoryId: category.id } }, 'none');
 }
 </script>
 

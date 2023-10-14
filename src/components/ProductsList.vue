@@ -50,7 +50,7 @@ const showProductModal = (product) => {
             <div class="product-item__info">
                 <div class="product-item__title" @click="showProductModal(product)">{{ product.title }}</div>
                 <div class="product-item__bottom">
-                    <div class="product-item__price">{{ product.price.toLocaleString() }} ₽</div>
+                    <div class="product-item__price">{{ product.price.toLocaleString() || 0 }} ₽</div>
                     <div class="add-to-cart">
                         <ion-button size="small" class="add-to-cart__button" @click="addToCart(product)" v-if="!inCart(product.id)">
                             <ion-icon slot="icon-only" :icon="cartOutline"></ion-icon>

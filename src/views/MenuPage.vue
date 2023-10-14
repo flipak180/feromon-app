@@ -11,7 +11,7 @@ const route = useRoute();
 
 const allCategories = await fetch(`${BASE_URL}/api/categories`).then((r) => r.json());
 const categories = allCategories.filter(item => !item.parent_id);
-const activeCategoryId = +route.params.category || categories[0].id;
+const activeCategoryId = +route.params.categoryId || categories[0].id;
 </script>
 
 <template>

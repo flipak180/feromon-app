@@ -16,13 +16,8 @@ const routes = [
         redirect: '/tabs/menu'
       },
       {
-        path: 'menu',
+        path: 'menu/:categoryId?',
         name: 'menu',
-        component: () => import('@/views/MenuPage.vue')
-      },
-      {
-        path: 'menu/category/:category',
-        name: 'category',
         component: () => import('@/views/MenuPage.vue')
       },
       // {
