@@ -15,7 +15,7 @@ const categories = computed(() => {
     return categoriesStore.categories;
 });
 const activeCategoryId = computed(() => {
-    return +route.params.categoryId || categories[0].id;
+    return +route.params.categoryId || categories.value[0].id;
 });
 </script>
 
