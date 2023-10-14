@@ -1,25 +1,18 @@
 <script setup>
-import {cartOutline, heartOutline} from "ionicons/icons";
+import {cartOutline, closeOutline} from "ionicons/icons";
 import {IonButton, IonIcon} from '@ionic/vue';
 import {useMainStore} from "@/store/index.js";
-import {onMounted, ref} from "vue";
 import AmountSpinner from "@/components/AmountSpinner.vue";
 import {BASE_URL} from "@/plugins/api.js";
 import logo from '@/assets/logo.jpg';
 
-const props = defineProps(['categoryId'])
 const store = useMainStore();
-const products = ref([])
 
 const toggleLike = (product) => {
     const favIndex = store.favs.findIndex(item => item.id === product.id);
     favIndex > -1
         ? store.favs.splice(favIndex, 1)
         : store.favs.push(product);
-}
-
-const inFav = (productId) => {
-    return store.favs.some(item => item.id === productId);
 }
 
 const addToCart = (product) => {
@@ -36,19 +29,13 @@ const inCart = (productId) => {
 const showProductModal = (product) => {
     store.modalProduct = product;
 }
-
-onMounted(() => {
-    fetch(`${BASE_URL}/api/products?category=${props.categoryId}`)
-        .then(r => r.json())
-        .then(r => products.value = r)
-})
 </script>
 
 <template>
-    <div class="products-list" v-if="products.length">
-        <div class="product-item" v-for="product in products" :key="product.id">
-            <ion-button size="small" shape="round" :color="inFav(product.id) ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product)">
-                <ion-icon slot="icon-only" :icon="heartOutline"></ion-icon>
+    <div class="products-list" v-if="store.favs.length">
+        <div class="product-item" v-for="product in store.favs" :key="product.id">
+            <ion-button size="small" shape="round" color="dark" class="product-item__like" @click="toggleLike(product)">
+                <ion-icon slot="icon-only" :icon="closeOutline"></ion-icon>
             </ion-button>
             <div class="product-item__image" :style="{ backgroundImage: `url(${product.image ? BASE_URL + product.image : logo})` }" @click="showProductModal(product)"></div>
             <div class="product-item__info">
