@@ -10,6 +10,7 @@ import logo from '@/assets/logo.jpg';
 const props = defineProps(['categoryId'])
 const store = useMainStore();
 const products = ref([])
+const isLoading = ref(false)
 
 const toggleLike = (product) => {
     const favIndex = store.favs.findIndex(item => item.id === product.id);
@@ -46,14 +47,18 @@ watch(() => props.categoryId, () => {
 })
 
 const fetchProducts = () => {
+    isLoading.value = true;
     fetch(`${BASE_URL}/api/products?category=${props.categoryId}`)
         .then(r => r.json())
-        .then(r => products.value = r)
+        .then(r => {
+            products.value = r;
+            isLoading.value = false;
+        });
 }
 </script>
 
 <template>
-    <div class="products-list" v-if="products.length">
+    <div class="products-list" v-if="!isLoading && products.length">
         <div class="product-item" v-for="product in products" :key="product.id">
             <ion-button size="small" shape="round" :color="inFav(product.id) ? 'primary' : 'dark'" class="product-item__like" @click="toggleLike(product)">
                 <ion-icon slot="icon-only" :icon="heartOutline"></ion-icon>
@@ -73,7 +78,7 @@ const fetchProducts = () => {
             </div>
         </div>
     </div>
-    <div v-else>Здесь пока ничего нет</div>
+    <div v-else>{{ isLoading ? 'Загрузка...' : 'Здесь пока ничего нет' }}</div>
 </template>
 
 <style scoped lang="scss">
