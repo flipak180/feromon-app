@@ -4,6 +4,7 @@ import {BASE_URL} from "@/plugins/api.js";
 export const useCategoriesStore = defineStore("categories", {
     state: () => ({
         categories: [],
+        activeCategoryId: 1,
     }),
     getters: {
         getCategories(state){

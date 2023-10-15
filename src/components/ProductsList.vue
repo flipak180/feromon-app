@@ -2,7 +2,7 @@
 import {cartOutline, heartOutline} from "ionicons/icons";
 import {IonButton, IonIcon} from '@ionic/vue';
 import {useMainStore} from "@/store/index.js";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import AmountSpinner from "@/components/AmountSpinner.vue";
 import {BASE_URL} from "@/plugins/api.js";
 import logo from '@/assets/logo.jpg';
@@ -38,10 +38,18 @@ const showProductModal = (product) => {
 }
 
 onMounted(() => {
+    fetchProducts(props.categoryId);
+})
+
+watch(() => props.categoryId, () => {
+    fetchProducts(props.categoryId);
+})
+
+const fetchProducts = () => {
     fetch(`${BASE_URL}/api/products?category=${props.categoryId}`)
         .then(r => r.json())
         .then(r => products.value = r)
-})
+}
 </script>
 
 <template>

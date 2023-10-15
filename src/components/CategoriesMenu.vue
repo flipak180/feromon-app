@@ -1,24 +1,21 @@
 <script setup>
-import {computed, ref, watch} from "vue";
+import {computed, ref} from "vue";
 import {useIonRouter} from "@ionic/vue";
+import {useCategoriesStore} from "@/store/categories.js";
 
 const ionRouter = useIonRouter();
+const categoriesStore = useCategoriesStore();
 const props = defineProps(['allCategories', 'activeCategoryId'])
 const categoriesEl = ref(null)
 
-watch(() => props.allCategories, async () => {
-    // console.log(123);
-    // await nextTick();
-    // console.log(categoriesEl.value);
-    // categoriesEl.value.scrollLeft = 200;
-})
-
-const categories = props.allCategories.filter(item => !item.parent_id);
-const activeCategory = props.allCategories.find(item => item.id === props.activeCategoryId);
-const subCategories = computed(() => props.allCategories.filter(item => item.parent_id && (item.parent_id === activeCategory.id || item.parent_id === activeCategory.parent_id)));
+const categories = computed(() => categoriesStore.categories.filter(item => !item.parent_id));
+//const activeCategory = props.allCategories.find(item => item.id === props.activeCategoryId);
+const activeCategory = computed(() => categoriesStore.categories.find(item => item.id === categoriesStore.activeCategoryId));
+const subCategories = computed(() => categoriesStore.categories.filter(item => item.parent_id && (item.parent_id === activeCategory.value.id || item.parent_id === activeCategory.value.parent_id)));
 
 const onCategorySelect = (category) => {
-    ionRouter.navigate({ name: 'menu', params: { categoryId: category.id } }, 'none');
+    // ionRouter.navigate({ name: 'menu', params: { categoryId: category.id } }, 'none');
+    categoriesStore.activeCategoryId = category.id;
 }
 </script>
 
