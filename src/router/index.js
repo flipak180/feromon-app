@@ -6,15 +6,15 @@ import {useCategoriesStore} from "@/store/categories.js";
 const routes = [
   {
     path: '/',
-    redirect: '/tabs/menu'
+    redirect: '/efimova/menu'
   },
   {
-    path: '/tabs/',
+    path: '/:place/',
     component: Tabs,
     children: [
       {
         path: '',
-        redirect: '/tabs/menu'
+        redirect: '/efimova/menu'
       },
       {
         path: 'menu/:categoryId?',

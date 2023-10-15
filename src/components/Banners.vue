@@ -1,11 +1,13 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {BASE_URL} from "@/plugins/api.js";
+import {useRoute} from "vue-router";
 
 const banners = ref([]);
+const route = useRoute();
 
 onMounted(() => {
-    fetch(`${BASE_URL}/api/banners`)
+    fetch(`${BASE_URL}/api/banners?place=${route.params.place}`)
         .then(r => r.json())
         .then(r => banners.value = r);
 })

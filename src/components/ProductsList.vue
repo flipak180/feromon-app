@@ -6,11 +6,13 @@ import {onMounted, ref, watch} from "vue";
 import AmountSpinner from "@/components/AmountSpinner.vue";
 import {BASE_URL} from "@/plugins/api.js";
 import logo from '@/assets/logo.jpg';
+import {useRoute} from "vue-router";
 
 const props = defineProps(['categoryId'])
 const store = useMainStore();
 const products = ref([])
 const isLoading = ref(false)
+const route = useRoute();
 
 const toggleLike = (product) => {
     const favIndex = store.favs.findIndex(item => item.id === product.id);
@@ -48,7 +50,7 @@ watch(() => props.categoryId, () => {
 
 const fetchProducts = () => {
     isLoading.value = true;
-    fetch(`${BASE_URL}/api/products?category=${props.categoryId}`)
+    fetch(`${BASE_URL}/api/products?category=${props.categoryId}&place=${route.params.place}`)
         .then(r => r.json())
         .then(r => {
             products.value = r;

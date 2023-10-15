@@ -3,7 +3,9 @@ import {IonBadge, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTab
 import {cart, heart, list} from 'ionicons/icons';
 import {useMainStore} from "@/store/index.js";
 import {computed} from "vue";
+import {useRoute} from "vue-router";
 
+const route = useRoute();
 const store = useMainStore();
 
 const totalAmount = computed(() => store.cart.reduce((acc, cartItem) => acc + cartItem.amount, 0));
@@ -14,18 +16,18 @@ const totalAmount = computed(() => store.cart.reduce((acc, cartItem) => acc + ca
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="bottom">
-                <ion-tab-button tab="tab1" href="/tabs/menu">
+                <ion-tab-button tab="tab1" :href="`/${route.params.place}/menu`">
                     <ion-icon aria-hidden="true" :icon="list"/>
                     <ion-label>Меню</ion-label>
                 </ion-tab-button>
 
-                <ion-tab-button tab="tab2" href="/tabs/favs">
+                <ion-tab-button tab="tab2" :href="`/${route.params.place}/favs`">
                     <ion-badge v-show="store.favs.length">{{ store.favs.length }}</ion-badge>
                     <ion-icon aria-hidden="true" :icon="heart"/>
                     <ion-label>Избранное</ion-label>
                 </ion-tab-button>
 
-                <ion-tab-button tab="tab3" href="/tabs/cart">
+                <ion-tab-button tab="tab3" :href="`/${route.params.place}/cart`">
                     <ion-badge v-show="totalAmount">{{ totalAmount }}</ion-badge>
                     <ion-icon aria-hidden="true" :icon="cart"/>
                     <ion-label>Корзина</ion-label>
