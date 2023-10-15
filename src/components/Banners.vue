@@ -1,16 +1,25 @@
 <script setup>
-import ananas from '@/assets/ananas_40.jpg'
-import apelsin from '@/assets/apelsin_42.jpg'
-import granat from '@/assets/granat_44.jpg'
-import grejpfrut from '@/assets/grejpfrut_43.jpg'
+import {onMounted, ref} from "vue";
+import {BASE_URL} from "@/plugins/api.js";
+
+const banners = ref([]);
+
+onMounted(() => {
+    fetch(`${BASE_URL}/api/banners`)
+        .then(r => r.json())
+        .then(r => banners.value = r);
+})
+
+const handleClick = (banner) => {
+    if (banner.link) {
+        window.open(banner.link, '_blank').focus();
+    }
+}
 </script>
 
 <template>
 <div class="banners">
-    <div class="banners__item" :style="{ backgroundImage: `url(${ananas})` }"></div>
-    <div class="banners__item" :style="{ backgroundImage: `url(${apelsin})` }"></div>
-    <div class="banners__item" :style="{ backgroundImage: `url(${granat})` }"></div>
-    <div class="banners__item" :style="{ backgroundImage: `url(${grejpfrut})` }"></div>
+    <div class="banners__item" v-for="banner in banners" :style="{ backgroundImage: `url(${BASE_URL + banner.image})` }" @click="handleClick(banner)"></div>
 </div>
 </template>
 
