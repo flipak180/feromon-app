@@ -1,4 +1,4 @@
-import {createApp} from 'vue'
+import {createApp, markRaw} from 'vue'
 import App from './App.vue'
 import router from './router';
 
@@ -28,6 +28,9 @@ import {piniaCapacitorPersist} from 'pinia-plugin-capacitor-persist';
 
 const pinia = createPinia();
 pinia.use(piniaCapacitorPersist);
+pinia.use(({ store }) => {
+    store.router = markRaw(router)
+});
 
 const app = createApp(App)
     .use(IonicVue, {

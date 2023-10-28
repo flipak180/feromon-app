@@ -12,15 +12,14 @@ export const useCategoriesStore = defineStore("categories", {
         }
     },
     actions: {
-        fetchCategories() {
+        fetchCategories(place) {
             if (this.categories.length) {
                 return;
             }
-            return fetch(`${BASE_URL}/api/categories`)
+            return fetch(`${BASE_URL}/api/categories?place=${place}`)
                 .then(r => r.json())
                 .then(data => {
-                    this.categories = data
-                    console.log('Data is fetched.')
+                    this.categories = data.filter(cat => !cat.parent_id || cat.total_products)
                 })
                 .catch((error) => {
                     console.log(error)

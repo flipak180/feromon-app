@@ -61,11 +61,11 @@ const inCart = (productId) => {
 
 <style scoped lang="scss">
 .product-modal {
-    --background: #fff;
+    --background: #000;
 
     ion-content {
-        --background: #fff;
-        --color: #000;
+        --background: #000;
+        --color: #fff;
     }
 
     &__content {

@@ -45,12 +45,12 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async () => {
+router.afterEach(async () => {
   const store = useMainStore();
   await store.restored;
 
   const categoriesStore = useCategoriesStore();
-  await categoriesStore.fetchCategories();
+  await categoriesStore.fetchCategories(router.currentRoute._value.params.place);
 })
 
 export default router
