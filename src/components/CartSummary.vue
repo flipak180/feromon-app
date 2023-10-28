@@ -1,9 +1,24 @@
 <script setup>
 import {useMainStore} from "@/store/index.js";
-import {computed} from "vue";
+import {computed, ref} from "vue";
+import {useRoute} from "vue-router";
 
 const store = useMainStore();
+const route = useRoute();
 const sum = computed(() => store.cart.reduce((acc, cartItem) => acc + (cartItem.price * cartItem.amount), 0));
+const table = ref();
+
+const placeOrder = async () => {
+    let text = `
+*Новый заказ!* _(${route.params.place})_
+%0AСтолик №${table.value || '-'}
+%0A----------------------%0A
+${store.cart.map(item => item.title + ' | ' + item.amount + ' шт.' + ' | ' + (item.price).toLocaleString() + ' ₽' + ' | ' + (item.price * item.amount).toLocaleString() + ' ₽').join('%0A')}
+%0A----------------------%0A
+Итого: *${sum.value.toLocaleString()} ₽*
+    `;
+    await fetch(`https://api.telegram.org/bot5478002238:AAFeOnFOAaxyeObjXVXWOzUcH9VpHMvo1S8/sendMessage?chat_id=909486&parse_mode=markdown&text=${text}`);
+}
 </script>
 
 <template>
@@ -11,8 +26,8 @@ const sum = computed(() => store.cart.reduce((acc, cartItem) => acc + (cartItem.
         <div class="cart-summary__text">Итого</div>
         <div class="cart-summary__total">{{ sum.toLocaleString() }} ₽</div>
         <div class="cart-summary__bottom">
-            <input type="text" class="cart-summary__input" placeholder="Номер столика">
-            <button class="cart-summary__submit">Сделать заказ</button>
+            <input type="text" class="cart-summary__input" placeholder="Номер столика" v-model="table">
+            <button class="cart-summary__submit" @click="placeOrder">Сделать заказ</button>
         </div>
     </div>
 </template>
