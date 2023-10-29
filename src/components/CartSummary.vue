@@ -2,22 +2,28 @@
 import {useMainStore} from "@/store/index.js";
 import {computed, ref} from "vue";
 import {useRoute} from "vue-router";
+import {IonAlert} from '@ionic/vue';
 
 const store = useMainStore();
 const route = useRoute();
 const sum = computed(() => store.cart.reduce((acc, cartItem) => acc + (cartItem.price * cartItem.amount), 0));
 const table = ref();
+const showAlert = ref(false);
+
+const alertButtons = ['OK'];
 
 const placeOrder = async () => {
     let text = `
 *Новый заказ!* _(${route.params.place})_
 %0AСтолик №${table.value || '-'}
 %0A----------------------%0A
-${store.cart.map(item => item.title + ' | ' + item.amount + ' шт.' + ' | ' + (item.price).toLocaleString() + ' ₽' + ' | ' + (item.price * item.amount).toLocaleString() + ' ₽').join('%0A')}
+${store.cart.map(item => item.title + ' ' + item.amount + ' шт.' + ' X ' + (item.price).toLocaleString() + ' ₽' + ' = ' + (item.price * item.amount).toLocaleString() + ' ₽').join('%0A')}
 %0A----------------------%0A
 Итого: *${sum.value.toLocaleString()} ₽*
     `;
     await fetch(`https://api.telegram.org/bot5478002238:AAFeOnFOAaxyeObjXVXWOzUcH9VpHMvo1S8/sendMessage?chat_id=909486&parse_mode=markdown&text=${text}`);
+    store.cart = [];
+    showAlert.value = true;
 }
 </script>
 
@@ -29,6 +35,12 @@ ${store.cart.map(item => item.title + ' | ' + item.amount + ' шт.' + ' | ' + (
             <input type="text" class="cart-summary__input" placeholder="Номер столика" v-model="table">
             <button class="cart-summary__submit" @click="placeOrder">Сделать заказ</button>
         </div>
+
+        <ion-alert
+            :is-open="showAlert"
+            header="Ваш заказ оформлен"
+            :buttons="alertButtons"
+        ></ion-alert>
     </div>
 </template>
 
