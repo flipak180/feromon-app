@@ -31,7 +31,7 @@ ${store.cart.map(item => item.title + ' ' + item.amount + ' шт.' + ' X ' + (it
     <div class="cart-summary" v-show="sum">
         <div class="cart-summary__text">Итого</div>
         <div class="cart-summary__total">{{ sum.toLocaleString() }} ₽</div>
-        <div class="cart-summary__bottom">
+        <div class="cart-summary__bottom" v-show="false">
             <input type="text" class="cart-summary__input" placeholder="Номер столика" v-model="table">
             <button class="cart-summary__submit" @click="placeOrder">Сделать заказ</button>
         </div>
