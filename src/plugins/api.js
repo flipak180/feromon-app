@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://info.feromon-menu.ru';
+export const BASE_URL = 'https://info.feromon-menu.ru';

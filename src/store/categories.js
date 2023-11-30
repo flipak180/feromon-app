@@ -23,7 +23,8 @@ export const useCategoriesStore = defineStore("categories", {
             return fetch(`${BASE_URL}/api/categories?place=${place}`)
                 .then(r => r.json())
                 .then(data => {
-                    this.categories = data.filter(cat => !cat.parent_id || cat.total_products)
+                    this.categories = data.filter(cat => cat.total_products2)
+                    //this.categories = data.filter(cat => cat.total_products)
                     //this.categories = data.filter(cat => totalChildProducts(data, cat.id))
                     //console.log(totalChildProducts(this.categories, 1));
                 })

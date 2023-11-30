@@ -39,11 +39,13 @@ const handleClick = (banner) => {
 
     &__item {
         flex: 0 0 100px;
-        height: 100px;
+        height: 177px;
         border-radius: 10px;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        border: 2px solid #7b4fd9;
+        padding: 2px;
     }
 }
 </style>
